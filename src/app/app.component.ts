@@ -6,5 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ngTraining-ssr';
+  private disclaimerVisibility = false;
+
+  public toggleDisclaimer(): void {
+    this.disclaimerVisibility = !this.disclaimerVisibility;
+  }
+
+  public get showDisclaimer(): boolean {
+    return this.disclaimerVisibility;
+  }
 }
