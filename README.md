@@ -1,27 +1,61 @@
-# NgTrainingSsr
+# Server Side Rendering (SSR)
+
+This exercise helps you to create an Angular Application that supports Server Side Rendering by utilizing Angular Universe. 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.6.
 
-## Development server
+## Tasks
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+1. Run the current application by `npm i && ng serve`.
 
-## Code scaffolding
+2. Add Server-Side Rendering (SSR) to the application: 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```
+ng add @nguniversal/express-engine --clientProject PROJECT_NAME
+# Check the PROJECT_NAME in the angular.json.
+```
 
-## Build
+3. Build the SSR application and run the node server to host it: 
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+```
+npm run build:ssr && npm run serve:ssr
+```
 
-## Running unit tests
+4. Render a `Date.now().toString();` somewhere on the page to check if the pre-rendering is done on the server or during buildtime. 
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+4. Change Network throttling to `Slow 3G` an check the result when clicking on the disclaimer button.
 
-## Running end-to-end tests
+5. Install and configure `preboot` to replay the javascript actions, once the application is fully loaded: 
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+```
+npm i preboot --save
 
-## Further help
+@NgModule({
+  declarations: [AppComponent],
+  imports: [
+    BrowserModule.withServerTransition({ appId: 'foo' }),
+    PrebootModule.withConfig({ appRoot: 'app-root' })
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+6. Extend the application by a simple `router-outlet` that shows two different pages. Introduce a simple navigation to both eager loaded pages.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+7. Add a lazy loaded module to the route configuration. 
+
+8. Register a token that has the value "SERVER" or "CLIENT" dependant where the application is running. 
+
+9. Fetch some random data from an external service and render it: 
+
+```
+  product$: Observable<string>;
+
+  constructor(private http: HttpClient) {
+    this.product$ = 
+        this.http.get("https://reqres.in/api/users/2")
+            .pipe(map(v => JSON.stringify(v)));
+  }
+
+  <div>{{ product$ | async }}</div>
+```
