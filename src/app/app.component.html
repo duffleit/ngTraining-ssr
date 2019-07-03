@@ -1,10 +1,23 @@
-<h1>A Angular Universal Application</h1>
+<div class="container">
+  <h1>A Angular Universal Application</h1>
 
-<div>This part of the page should already be rendered by the application.</div>
+  <div>This part of the page should already be rendered by the application.</div>
 
-<div class="disclaimer">
-  <button (click)="toggleDisclaimer()">Toggle Disclaimer</button>
-  <div *ngIf="showDisclaimer" class="panel">
-    this text can only be opended once javascript is loaded.
+  <div>
+    <a routerLink="/a">Component A</a> &nbsp;
+    <a routerLink="/b">Component B</a> &nbsp;
+    <a routerLink="/lazy">Lazy</a>
   </div>
+
+  <router-outlet></router-outlet>
+
+  <div class="disclaimer">
+    <button (click)="toggleDisclaimer()">Toggle Disclaimer</button>
+    <div *ngIf="showDisclaimer" class="panel">
+      this text can only be opended once javascript is loaded.
+    </div>
+  </div>
+
+  <div> {{ date }} </div>
+  <div> {{ environment }} </div>
 </div>
